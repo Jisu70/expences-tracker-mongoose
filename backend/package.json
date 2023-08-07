@@ -1,0 +1,33 @@
+{
+  "name": "expenses-tracker-mysql-api",
+  "version": "1.0.0",
+  "description": "A simple expenses tracker api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "author": "Sudipta Jana (jisu)",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1408.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "mongoose": "^7.4.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.3.5",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^2.0.22",
+    "razorpay": "^2.8.6"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "sequelize": "^6.32.1"
+  }
+}

@@ -1,0 +1,32 @@
+Populate via forigen key 
+
+// To get all the expenses
+/**
+ * Populate via Foregin key
+ * @param {*} req
+ * @param {*} res
+ */
+app.allUserTotalExpenses = (req, res) => {
+  Expense.findAll({ include: [User] })
+    .then((exp) => {
+      res.send(exp);
+    })
+    .catch((err) => console.error("Error fetching Expenses:", err));
+};
+
+// Hooks 
+
+// Add hook
+
+Expense.addHook("afterCreate", async (expense, options) => {
+  try {
+    const totalAmount = await Expense.sum("amount", {
+      where: { UserId: expense.UserId },
+    });
+    await User.update(
+      { totalamount: totalAmount },
+      { where: { id: expense.UserId } }
+    );
+  } catch (error) {
+    console.error("Error updating totalamount:", error);
+  }

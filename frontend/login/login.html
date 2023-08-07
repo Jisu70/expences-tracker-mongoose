@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link rel="shortcut icon" href="#">
+  </head>
+  <body>
+    <div class="login-box">
+      <h2>Login</h2>
+      <form>
+        <div class="form-group">
+          <label for="username">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <div class="form-group">
+          <a href="http://127.0.0.1:5500/frontend/forgetpass/forget.html" class="text-primary" id="forgot-password">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btn">Login</button>
+      </form>
+      <div class="signup-box">
+        <a href="http://127.0.0.1:5500/frontend/signup/signup.html" class="text-primary">Don't have an account? Signup here</a>
+      </div>
+    </div>
+    <script src="login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
