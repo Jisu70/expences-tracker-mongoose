@@ -30,12 +30,12 @@ expenseSchema.post("save", async function (doc, next) {
       .aggregate([
         {
           $match: {
-            user: this.user,
+            userId: this.userId,
           },
         },
         {
           $group: {
-            _id: "$user",
+            _id: "$userId",
             totalAmount: { $sum: { $toInt: "$amount" } },
           },
         },
@@ -44,7 +44,7 @@ expenseSchema.post("save", async function (doc, next) {
 
     if (totalAmount.length > 0) {
       await User.updateOne(
-        { _id: this.user },
+        { _id: this.userId },
         { totalamount: totalAmount[0].totalAmount }
       );
     }
@@ -54,6 +54,7 @@ expenseSchema.post("save", async function (doc, next) {
     next(error);
   }
 });
+
 
 const Expense = mongoose.model("Expense", expenseSchema);
 

@@ -30,56 +30,65 @@ async function addExpenses() {
   item.value = "";
 }
 
-// TO Display expenses using pagination 
+// Using Pagination to Show the items
+
 let currentPage = 1;
 async function showAllExpensesOnScreen(page) {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`${API_URL}/pagination?page=${page}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/pagination?page=${page}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (response.status === 401) {
-    const loginPageLink = "http://127.0.0.1:5500/frontend/login/login.html";
-    const confirmMessage = `Please click OK to go to the login page.`;
-    if (window.confirm(confirmMessage)) {
-      window.location.href = loginPageLink;
+    if (response.status === 401) {
+      const loginPageLink = "http://127.0.0.1:5500/frontend/login/login.html";
+      const confirmMessage = `Please click OK to go to the login page.`;
+      if (window.confirm(confirmMessage)) {
+        window.location.href = loginPageLink;
+      }
+      return;
     }
-    return;
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch expenses.");
+    }
+
+    const { result, totalCount } = await response.json();
+    const itemList = document.getElementsByClassName("list-group")[0];
+    // Clear the existing content
+    itemList.innerHTML = "";
+
+    result.forEach((item) => {
+      const listItem = document.createElement("li");
+      listItem.className = "list-group-item";
+      listItem.style.backgroundColor = "#6dbd9f4d";
+      listItem.style.color = "#000000";
+      listItem.textContent = `Item Name: ${item.item}, Item Price: ${item.amount}, Category: ${item.category}`;
+      const editButton = document.createElement("button");
+      editButton.className = "btn btn-info";
+      editButton.style.float = "right";
+      editButton.textContent = "Edit";
+      editButton.addEventListener("click", () =>
+        editItemDetails(item._id, item.item, item.amount, item.category)
+      );
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "btn btn-danger";
+      deleteButton.style.float = "right";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => deleteItem(item._id));
+      listItem.appendChild(editButton);
+      listItem.appendChild(deleteButton);
+      itemList.appendChild(listItem);
+    });
+
+    displayPaginationButtons(totalCount);
+  } catch (error) {
+    console.error(error);
   }
-
-  const { result } = await response.json();
-  const itemList = document.getElementsByClassName("list-group")[0];
-  // Clear the existing content
-  itemList.innerHTML = "";
-
-  result.forEach((item) => {
-    const listItem = document.createElement("li");
-    listItem.className = "list-group-item";
-    listItem.style.backgroundColor = "#6dbd9f4d";
-    listItem.style.color = "#000000";
-    listItem.textContent = `Item Name: ${item.item}, Item Price: ${item.amount}, Category: ${item.category}`;
-    const editButton = document.createElement("button");
-    editButton.className = "btn btn-info";
-    editButton.style.float = "right";
-    editButton.textContent = "Edit";
-    editButton.addEventListener("click", () =>
-      editItemDetails(item._id, item.item, item.amount, item.category)
-    );
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "btn btn-danger";
-    deleteButton.style.float = "right";
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", () => deleteItem(item._id));
-    listItem.appendChild(editButton);
-    listItem.appendChild(deleteButton);
-    itemList.appendChild(listItem);
-  });
-
-  displayPaginationButtons(result.totalCount);
 }
 
 function displayPaginationButtons(totalCount) {
@@ -117,7 +126,6 @@ function createPaginationButton(text, page) {
   return button;
 }
 
-// Call the function initially to display the first page of expenses
 showAllExpensesOnScreen(currentPage);
 
 // TO update existing expenses
@@ -176,7 +184,9 @@ async function showTotalExpenses() {
   result.forEach((item) => {
     sum += parseInt(item.amount);
   });
-  document.getElementById("totalAmount").textContent = `Total Expenses : ${sum}`;
+  document.getElementById(
+    "totalAmount"
+  ).textContent = `Total Expenses : ${sum}`;
   console.log("Total expenses:", sum);
 }
 
@@ -216,13 +226,16 @@ const buyPremium = async () => {
     const token = localStorage.getItem("token");
     const data = await fetch("http://localhost:3000/api/razorpay/key");
     const { key } = await data.json();
-    const response = await fetch("http://localhost:3000/api/razorpay/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:3000/api/razorpay/checkout",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const { details } = await response.json();
 
@@ -232,7 +245,8 @@ const buyPremium = async () => {
       key: key,
       currency: "INR",
       description: "Test Transaction",
-      image: "https://clipartix.com/wp-content/uploads/2016/09/Cartoons-clipart-image-1.jpg",
+      image:
+        "https://clipartix.com/wp-content/uploads/2016/09/Cartoons-clipart-image-1.jpg",
       order_id: details.id,
       callback_url: `http://localhost:3000/api/razorpay/verify?token=${token}`,
       prefill: {
@@ -264,7 +278,8 @@ let premiumUserButton = async () => {
     },
   });
 
-  const leadboardLink = "http://127.0.0.1:5500/frontend/leadboard/leadbord.html";
+  const leadboardLink =
+    "http://127.0.0.1:5500/frontend/leadboard/leadbord.html";
   const { result } = await response.json();
   if (result.isPremium === true) {
     window.location.href = leadboardLink;

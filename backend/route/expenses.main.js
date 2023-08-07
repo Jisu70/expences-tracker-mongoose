@@ -26,14 +26,12 @@ router.get("/lead-board", expensesController.allUserTotalExpenses);
 router.get("/is-premium", checkLogin, expensesController.isPremium);
 //
 router.get("/perusertotal", expensesController.perUserTotal);
-// 
-router.get("/month", expensesController.getExpensesByMonthAndDate);
 // Download exp
 router.get("/download", checkLogin, expensesController.downloadExpenses);
 // All download links of a user
 router.get("/alllinks", checkLogin, expensesController.usersAllExpenseslink);
 
 // For pagination 
-router.get("/pagination", checkLogin, expensesController.pagination);
+router.get("/pagination", expensesController.pagination);
 
 module.exports = router;

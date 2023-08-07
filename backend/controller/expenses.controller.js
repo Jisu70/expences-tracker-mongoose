@@ -132,10 +132,9 @@ const isPremium = async (req, res) => {
 };
 
 
-// 
+// Total expense of single user
 const perUserTotal = async (req, res) => {
   try {
-    // Groupby technique
     const expenses = await Expense.aggregate([
       {
         $group: {
@@ -144,6 +143,7 @@ const perUserTotal = async (req, res) => {
         }
       }
     ]);
+    console.log(expenses)
     res.send(expenses);
   } catch (error) {
     console.error("Error retrieving expenses:", error);
@@ -151,36 +151,8 @@ const perUserTotal = async (req, res) => {
   }
 };
 
-// Function to fetch expenses month-wise and date-wise
-const getExpensesByMonthAndDate = async (req, res) => {
-  console.log("i called");
-  try {
-    const expenses = await Expense.aggregate([
-      {
-        $project: {
-          month: { $month: "$createdAt" },
-          date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-          amount: 1
-        }
-      },
-      {
-        $group: {
-          _id: {
-            month: "$month",
-            date: "$date"
-          },
-          totalamount: { $sum: "$amount" }
-        }
-      }
-    ]);
-    res.status(200).json(expenses);
-  } catch (error) {
-    console.error("Error retrieving expenses:", error);
-    throw error;
-  }
-};
-//
 
+// Download exp
 const downloadExpenses = async (req, res) => {
   try {
     const id = req.userId;
@@ -231,13 +203,12 @@ const pagination = async (req, res) => {
 module.exports = {
   saveData,
   allExpenses,
-  allUserTotalExpenses,
+  allUserTotalExpenses, 
   updateExpenses,
   totalExpenses,
   deleteExpenses,
   isPremium,
   perUserTotal,
-  getExpensesByMonthAndDate,
   downloadExpenses,
   findUser,
   usersAllExpenseslink,
