@@ -1,91 +1,85 @@
-# Expenses Tracker
+# Expenses Tracker with MongoDB and Mongoose
 
 ## Introduction
-Expenses Tracker is a full-stack web application developed using Node.js and MySQL. It provides users with the ability to track and manage their expenses in a convenient and organized manner. The application includes features such as user authentication (signup, login, forget password), a payment interface with Razorpay integration, and an API implementation for seamless communication between the frontend and backend. The project also utilizes ORM Sequelize for database querying, pagination for efficient data handling, and Bootstrap for a visually appealing user interface.
+Expenses Tracker is a full-stack web application developed using Node.js and MongoDB with the help of Mongoose. It provides users with a way to keep track of their expenses in an organized manner. The application includes features like user authentication (signup, login, password recovery), a payment system integrated with Razorpay, and an API for smooth communication between the frontend and backend. The project also utilizes Mongoose, an ODM (Object Data Modeling) library, to interact with the MongoDB database. The frontend design is enhanced with the use of Bootstrap for a user-friendly interface.
 
 ## Features
 - User Authentication:
-  - Signup: Users can create new accounts by providing necessary information.
+  - Signup: Users can create new accounts by providing their information.
   - Login: Existing users can securely log into their accounts.
-  - Forgot Password: Users can reset their passwords by following the password recovery process.
+  - Password Recovery: Users can reset their passwords if forgotten.
 
 - Expense Tracking:
-  - Create Expenses: Users can add new expense records with details such as amount, category, and date.
-  - View Expenses: Users can see a list of their expenses, organized by date and category.
-  - Edit/Remove Expenses: Users have the ability to edit or delete individual expense records.
+  - Create Expenses: Users can add new expense records, including amount, category, and date.
+  - View Expenses: Users can see a list of their expenses, categorized by date and type.
+  - Edit/Remove Expenses: Users can edit or delete individual expense records.
 
 - Payment Integration:
-  - Razorpay: Users can make payments securely using the Razorpay payment gateway.
+  - Razorpay: Users can make secure payments using the Razorpay payment gateway.
 
-- API Implementation:
-  - Backend API: The application provides a set of API endpoints for seamless communication between the frontend and backend.
+- API Usage:
+  - Backend API: The application provides API endpoints for communication between the frontend and backend.
 
 - Database:
-  - MySQL: The application uses MySQL as the database to store and manage expense records.
+  - MongoDB: The application uses MongoDB to store and manage expense records.
 
-- ORM and Querying:
-  - Sequelize: ORM Sequelize is used for simplified database querying and interaction.
+- Object Data Modeling:
+  - Mongoose: Mongoose simplifies interaction with the MongoDB database by providing a structured way to work with data.
 
 - Pagination:
-  - Efficient Data Handling: The application implements pagination to handle large amounts of expense data effectively.
+  - Efficient Data Handling: The application implements pagination for effective management of large amounts of data.
 
 - Frontend Design:
-  - Bootstrap: The frontend is designed using the Bootstrap framework, ensuring a visually appealing and responsive user interface.
+  - Bootstrap: The frontend is styled using the Bootstrap framework, ensuring a visually appealing and responsive design.
 
 ## Prerequisites
-- Node.js installed on your system
-- MySQL server installed and running
+- Node.js installed on your computer
+- MongoDB server installed and running
 - Razorpay account for payment integration
 
 ## Installation
 1. Clone the repository: `git clone https://github.com/your_username/expenses-tracker.git`
-2. Navigate to the project directory: `cd expenses-tracker`
+2. Go to the project folder: `cd expenses-tracker`
 3. Install dependencies: `npm install`
 
 ## Configuration
-1. Create a new MySQL database for the application.
+1. Create a new MongoDB database for the application.
 2. Rename the `.env.example` file to `.env`.
 3. Open the `.env` file and update the following configurations:
-   - `DB_HOST`: Set the MySQL database host.
-   - `DB_PORT`: Set the MySQL database port.
-   - `DB_NAME`: Set the name of the MySQL database you created.
-   - `DB_USERNAME`: Set the MySQL database username.
-   - `DB_PASSWORD`: Set the MySQL database password.
+   - `DB_CONNECTION_STRING`: Set the MongoDB connection string.
    - `RAZORPAY_KEY_ID`: Set your Razorpay key ID.
    - `RAZORPAY_KEY_SECRET`: Set your Razorpay key secret.
 
 ## Usage
 1. Start the server: `npm start`
-2. Open your web browser and visit `http://localhost:3000` to access the application.
+2. Open your web browser and go to `http://localhost:3000` to access the application.
 
 ## API Documentation
-The application provides the following API endpoints for integration with other systems:
+The application offers the following API endpoints for integration with other systems:
 
-- **GET** `/api/expenses` - Get a list of all expenses.
-- **GET** `/api/expenses/:id` - Get a specific expense by its ID.
+- **GET** `/api/expenses` - Retrieve a list of all expenses.
+- **GET** `/api/expenses/:id` - Retrieve a specific expense by its ID.
 - **POST** `/api/expenses` - Create a new expense.
-- **PUT** `/api/expenses/:id` - Update an existing expense by its ID.
-- **DELETE** `/api/expenses/:id` - Delete an expense by its ID.
+- **PUT** `/api/expenses/:id` - Update an existing expense using its ID.
+- **DELETE** `/api/expenses/:id` - Delete an expense using its ID.
 
 ## Contributing
-Contributions are welcome! If you would like to contribute to this project, please follow these steps:
+Contributions are welcome! To contribute, follow these steps:
 1. Fork the repository.
 2. Create a new branch: `git checkout -b my-feature-branch`.
-3. Make your changes and
-
- commit them: `git commit -m 'Add some feature'`.
-4. Push the changes to your forked repository: `git push origin my-feature-branch`.
-5. Submit a pull request detailing the changes you made.
+3. Make and commit your changes: `git commit -m 'Add some feature'`.
+4. Push changes to your forked repository: `git push origin my-feature-branch`.
+5. Submit a pull request describing your changes.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
-## Acknowledgements
+## Acknowledgments
 - [Node.js](https://nodejs.org/)
-- [MySQL](https://www.mysql.com/)
+- [MongoDB](https://www.mongodb.com/)
 - [Razorpay](https://razorpay.com/)
-- [Sequelize](https://sequelize.org/)
+- [Mongoose](https://mongoosejs.com/)
 - [Bootstrap](https://getbootstrap.com/)
 
 ## Contact
-If you have any questions or suggestions, feel free to reach out to the project maintainer at (mailto:sudiptajana70@gmail.com).
+For questions or suggestions, contact the project maintainer at (mailto:sudiptajana70@gmail.com).
